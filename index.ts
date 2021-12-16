@@ -2,6 +2,7 @@ const util = require('util');
 const inquirer = require("inquirer");
 const exec = util.promisify(require('child_process').exec);
 inquirer.registerPrompt('search-list', require('inquirer-search-list'));
+const terminalLink = require('terminal-link');
 
 class PortForwarder {
   availableNamespaces = ['integration'];
@@ -60,7 +61,7 @@ class PortForwarder {
 
   executeForwarding(){
     const { exec } = require('child_process');
-    console.log('🏃 Forwarding started: http://localhost:8080/.magnolia/sys_login');
+    console.log(`🏃 Forwarding started. ${terminalLink('Login to Magnolia', 'http://localhost:8080/.magnolia/sys_login')}`);
     exec(`kubectl -n ${this.selectedNamespace} port-forward ui-magnolia-${this.selectedInstance}-0 8080:8080`, (error, stdout, stderr) => {
       if (error) {
         console.error(`exec error: ${error}`);
