@@ -4,7 +4,7 @@ const exec = util.promisify(require('child_process').exec);
 inquirer.registerPrompt('search-list', require('inquirer-search-list'));
 
 class PortForwarder {
-  availableNamespaces = [];
+  availableNamespaces = ['integration'];
   selectedNamespace = '';
   availableInstances = ['author', 'public'];
   selectedInstance = '';
@@ -20,7 +20,7 @@ class PortForwarder {
       return;
     }
 
-    this.availableNamespaces = PortForwarder.convertOutputToNamespaces(stdout);
+    this.availableNamespaces = [...this.availableNamespaces, ...PortForwarder.convertOutputToNamespaces(stdout)];
     this.setNamespace();
   }
 
@@ -76,6 +76,7 @@ class PortForwarder {
       'kube-public',
       'kube-system',
       'velero',
+      'integration', // already set initally
     ]
     let output = input.split("\n"); // convert lines to array
     output =  output.slice(1, output.length - 1) // remove first and last line
