@@ -21,7 +21,7 @@ class PortForwarder {
       return;
     }
 
-    this.availableNamespaces = [...this.availableNamespaces, ...PortForwarder.convertOutputToNamespaces(stdout)];
+    this.availableNamespaces = [...this.availableNamespaces, ...PortForwarder.convertOutputToNamespaces(stdout)].filter((pod) => pod.match(/^[a-z0-9]+(?:-[a-z0-9]+)*$/igm));
     this.setNamespace();
   }
 
@@ -79,7 +79,7 @@ class PortForwarder {
       'velero',
       'integration', // already set initally
     ]
-    let output = input.split("\n"); // convert lines to array
+    let output = input.split("\n") // convert lines to array
     output =  output.slice(1, output.length - 1) // remove first and last line
     output = output.map((pod) => pod.split("Active")[0].trim()); // convert to podnames
     output = output.filter((pod) => !unneededPods.includes(pod)); // filter correct podnames
