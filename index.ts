@@ -42,7 +42,7 @@ class PortForwarder {
       .catch(e => console.log(e));
   }
 
-   setInstance(){
+  setInstance(){
     inquirer
       .prompt([
           {
@@ -62,6 +62,7 @@ class PortForwarder {
   executeForwarding(){
     const { exec } = require('child_process');
     console.log(`🏃 Forwarding started. ${terminalLink('Login to Magnolia', 'http://localhost:8080/.magnolia/sys_login')}`);
+    exec('open http://localhost:8080/.magnolia/sys_login');
     exec(`kubectl -n ${this.selectedNamespace} port-forward ui-magnolia-${this.selectedInstance}-0 8080:8080`, (error, stdout, stderr) => {
       if (error) {
         console.error(`exec error: ${error}`);
