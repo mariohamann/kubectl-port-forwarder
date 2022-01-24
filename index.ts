@@ -7,7 +7,7 @@ const terminalLink = require('terminal-link');
 class PortForwarder {
   availableNamespaces = ['integration'];
   selectedNamespace = '';
-  availableInstances = ['author', 'public'];
+  availableInstances = ['author (8080)', 'public (8081)', 'both (8080+8081)'];
   selectedInstance = '';
 
   constructor() {
@@ -60,9 +60,18 @@ class PortForwarder {
   }
 
   executeForwarding(){
+    const isBoth = this.selectedInstance.includes('both');
+    const isPublic = !this.selectedInstance.includes('author');
+    const isAuthor = !this.selectedInstance.includes('public');
+    
     const { exec } = require('child_process');
-    console.log(`🏃 Forwarding started. ${terminalLink('Login to Magnolia', 'http://localhost:8080/.magnolia/sys_login')}`);
-    exec(`kubectl -n ${this.selectedNamespace} port-forward ui-magnolia-${this.selectedInstance}-0 8080:8080`, (error, stdout, stderr) => {
+    console.log(`🏃 Forwarding started. ${ isAuthor ? '\n- Login to Magnolia (Author): http://localhost:8080/.magnolia/sys_login' : ''} ${ isPublic ? '\n- Login to Magnolia (Public): http://localhost:8081/.magnolia/sys_login' : ''}`);
+    const bash = `${isBoth ? `(trap 'kill 0' SIGINT; ` : ''}
+      ${isAuthor ? `kubectl -n ${this.selectedNamespace} port-forward ui-magnolia-author-0 8080:8080` : ''}
+      ${isBoth ? ` & ` : ''}
+      ${isPublic ? `kubectl -n ${this.selectedNamespace} port-forward ui-magnolia-public-0 8081:8080` : ''}
+      ${isBoth ? ` )` : ''}`;
+    exec(bash.replace(/(\r\n|\n|\r)/gm, ""), (error, stdout, stderr) => {
       if (error) {
         console.error(`exec error: ${error}`);
         return;
@@ -77,7 +86,11 @@ class PortForwarder {
       'kube-public',
       'kube-system',
       'velero',
-      'integration', // already set initally
+      'tigera-operator',
+      'gatekeeper-system',
+      'calico-system',
+      'akv2k8s',
+      'integration' // already set initally
     ]
     let output = input.split("\n") // convert lines to array
     output =  output.slice(1, output.length - 1) // remove first and last line
