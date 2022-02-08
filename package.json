@@ -13,8 +13,9 @@
     "@types/node": "^17.0.0"
   },
   "dependencies": {
+    "chalk": "4.1.2",
+    "dotenv": "^16.0.0",
     "inquirer": "^8.2.0",
-    "inquirer-search-list": "^1.2.6",
-    "terminal-link": "^2"
+    "inquirer-search-list": "^1.2.6"
   }
 }
