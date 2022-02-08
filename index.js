@@ -72,6 +72,7 @@ class PortForwarder {
       }
 
       convertedUrl.host = splittedHost[1] === 'author' ? 'localhost:8080' : 'localhost:8081';
+      convertedUrl.protocol = 'http';
       console.log(`🔗 Your new URL: ${chalk.green.bold(convertedUrl.href)}`);
     }
 
