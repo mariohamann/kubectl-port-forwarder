@@ -67,7 +67,7 @@ class PortForwarder {
     } else {
       const splittedHost = convertedUrl.host.split('.');
       if (splittedHost.length !== 7) {
-        convertedUrl.pathname = `${splittedHost.splice(0, 1)}${convertedUrl.pathname}`;
+        convertedUrl.pathname = `${splittedHost.splice(0, 1)[0].replace('-testing', '-testing-site')}${convertedUrl.pathname}`;
         convertedUrl.host = splittedHost.join('.')
       }
 
