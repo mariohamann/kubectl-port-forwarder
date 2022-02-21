@@ -3,7 +3,7 @@
 ## Feature 1: Activate port forwarding
 1. Start with e. g. `npm run start`
 2. Select environment etc.
-3. Done. (This 
+3. Done. (This was the boring part of the readme...)
 
 ## Feature 2: Convert URLs
 ⚠️ You have to create an .env-file first. You can use the .env-example and replace the placeholders (`CMS-NAME` etc.)
