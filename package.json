@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
+  "bin": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "author": "Mario Hamann",
   "license": "ISC",

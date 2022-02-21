@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const util = require('util');
 const inquirer = require("inquirer");
 const exec = util.promisify(require('child_process').exec);
