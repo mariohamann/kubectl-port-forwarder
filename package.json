@@ -16,6 +16,7 @@
     "chalk": "4.1.2",
     "dotenv": "^16.0.0",
     "inquirer": "^8.2.0",
+    "inquirer-checkbox-plus-prompt": "^1.0.1",
     "inquirer-search-list": "^1.2.6"
   }
 }
