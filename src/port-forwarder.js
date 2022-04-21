@@ -73,7 +73,7 @@ class PortForwarder {
     })
 
     const { exec } = require('child_process');
-    console.log(`🏃 Forwarding started. ${isAuthor ? `\n- Login to Magnolia (Author): ${chalk.green.bold('http://localhost:8080/.magnolia/sys_login')}` : ''} ${isPublic ? `\n- Login to Magnolia (Public): ${chalk.green.bold('http://localhost:8081/.magnolia/sys_login')}` : ''}`);
+    console.log(`⏩ Forwarding started. ${isAuthor ? `\n- Login to Magnolia (Author): ${chalk.green.bold('http://localhost:8080/.magnolia/sys_login')}` : ''} ${isPublic ? `\n- Login to Magnolia (Public): ${chalk.green.bold('http://localhost:8081/.magnolia/sys_login')}` : ''}`);
     const bash = `${isBoth ? `(trap 'kill 0' SIGINT; ` : ''}
       ${isAuthor ? `kubectl -n ${this.selectedNamespace} port-forward ui-magnolia-author-0 8080:8080` : ''}
       ${isBoth ? ` & ` : ''}
