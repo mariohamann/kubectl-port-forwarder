@@ -1,8 +1,28 @@
 require('dotenv').config()
+const inquirer = require("inquirer");
 const fs = require('fs')
 const chalk = require('chalk');
 
-urlConverter = (url) => {
+const askForUrl = () => {
+  inquirer
+    .prompt([{ name: 'url', message: 'Enter an URL to convert:' },])
+    .then((answers) => {
+      urlConverter(answers.url);
+    })
+}
+
+const log = (url) => {
+  console.log(`\n
+🎉  Your new URL: ${chalk.green.bold(url)}
+`);
+}
+
+const urlConverter = (url = '') => {
+  if (!url) {
+    askForUrl();
+    return;
+  }
+
   const convertedUrl = new URL(url);
   if (convertedUrl.hostname === 'localhost') {
     fs.readFile('tmp', 'utf8', (err, data) => {
@@ -14,9 +34,7 @@ urlConverter = (url) => {
         convertedUrl.protocol = 'https://';
         convertedUrl.host = `${data}.${convertedUrl.port === '8080' ? 'author' : 'public'}.${process.env.BASEURL}`;
         convertedUrl.port = '';
-        console.log(`
-🎉  Your new URL: ${chalk.green.bold(convertedUrl.href)}
-`);
+        log(convertedUrl.href);
       }
     })
   } else {
@@ -28,7 +46,7 @@ urlConverter = (url) => {
 
     convertedUrl.host = splittedHost[1] === 'author' ? 'localhost:8080' : 'localhost:8081';
     convertedUrl.protocol = 'http';
-    console.log(`🔗 Your new URL: ${chalk.green.bold(convertedUrl.href)}`);
+    log(convertedUrl.href);
   }
 
 }
