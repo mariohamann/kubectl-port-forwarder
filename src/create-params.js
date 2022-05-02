@@ -36,7 +36,7 @@ const getBranch = (repo) => {
       else {
         console.log(`
 🎉 Your new Params: ${chalk.green.bold(
-          `?${repoParams.toString().replaceAll('/', '_')}
+          `?${repoParams.toString().replaceAll('%2F', '_')}
 `
         )}`);
         if (repoParams.has('trackingWebComponentsVersion')) {
